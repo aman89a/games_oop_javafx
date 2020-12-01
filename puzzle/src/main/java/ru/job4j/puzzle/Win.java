@@ -1,37 +1,39 @@
 package ru.job4j.puzzle;
 
 public class Win {
-    public static boolean check(int[][] board) {
-        boolean rsl = true;
-        boolean verRsl = true;
-        boolean gorRsl = true;
+
+    public static boolean monoHorizontal(int[][] board, int row) {
+        boolean result = true;
         int temp = 0;
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++){
-                if (board[i][j] == 1) {
-                    for (int k = 0; k < board.length; k++){
-                        if (board[k][j] != 1){
-                            verRsl = false;
-                            break;
-                        }
-                    }
-                    for (int k = 0; k < board[i].length; k++){
-                        if (board[i][k] != 1){
-                            gorRsl = false;
-                            break;
-                        }
-                    }
-                    if (verRsl) {
-                        rsl = verRsl;
-                    } else if (gorRsl) {
-                        rsl = gorRsl;
-                    } else {
-                        rsl = false;
-                    }
-
-                }
+            if (board[row][i] != 1) {
+                result = false;
+                break;
             }
         }
-        return rsl;
+        return result;
+    }
+
+    public static boolean monoVertical(int[][] board, int column) {
+        boolean result = true;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][column] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static boolean check(int[][] board) {
+
+        boolean result = false;
+        for (int i = 0; i < board.length; i++) {
+            if ((board[i][i] == 1) && (monoHorizontal(board, i) || monoVertical(board, i))) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }
